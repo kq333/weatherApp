@@ -1,11 +1,12 @@
 .navbar {
-    max-width: 500px;
+    width: 500px;
     border: 1px solid #ef4444;
     padding: 10px;
     border-radius: 30px;
 
     &--isActive {
         max-width: 500px;
+        width: 100%;
         border: 1px solid grey;
         padding: 10px;
         border-radius: 30px;
@@ -17,7 +18,8 @@
     }
 
     &__input-elem {
-        width: 450px;
+        max-width: 450px;
+        width: 100%;
         padding: 9px;
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
