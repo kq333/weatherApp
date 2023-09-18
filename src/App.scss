@@ -1,0 +1,9 @@
+.page {
+    max-width: 1440px;
+    margin: auto;
+
+    &__nav {
+        display: flex;
+        justify-content: center;
+    }
+}
