@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import { useDispatch } from "react-redux";
+import { setInputValue } from '../../features/locationSlice';
 import './navbar.scss';
 
 export const Navbar = () => {
   const [inputText, setInputText] = useState('');
+  const dispatch = useDispatch();
 
   const handleTextChange = (event) => {
     setInputText(event.target.value);
@@ -16,7 +19,7 @@ export const Navbar = () => {
 
   const addElem = (event) => {
     event.preventDefault();
-
+    dispatch(setInputValue(inputText))
     setInputText('');
   };
 
