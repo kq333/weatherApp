@@ -1,0 +1,54 @@
+.navbar {
+    max-width: 500px;
+    border: 1px solid #ef4444;
+    padding: 10px;
+    border-radius: 30px;
+
+    &--isActive {
+        max-width: 500px;
+        border: 1px solid grey;
+        padding: 10px;
+        border-radius: 30px;
+    }
+
+    &__form {
+        display: flex;
+        align-items: center;
+    }
+
+    &__input-elem {
+        width: 450px;
+        padding: 9px;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+        border: transparent;
+        font-family: 'Roboto';
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &__search-btn {
+        padding: 8px 20px;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+        border-left: transparent;
+        border: transparent;
+        background-color: #ffffff;
+
+        &--isActive {
+            cursor: default;
+            padding: 8px 20px;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+            border-left: transparent;
+            border: transparent;
+            background-color: #ffffff;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
