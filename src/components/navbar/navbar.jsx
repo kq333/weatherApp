@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from "react-redux";
+import { useDispatch } from 'react-redux';
 import { setInputValue } from '../../features/locationSlice';
 import './navbar.scss';
 
@@ -14,18 +14,27 @@ export const Navbar = () => {
   const iconColor = !inputText.length
     ? `#ef4444
   `
-    : `black
+    : `#000000
   `;
 
-  const addElem = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(setInputValue(inputText))
+    dispatch(setInputValue(inputText.toLocaleLowerCase()));
+
+    const cityCounter = localStorage.getItem('cities')
+      ? JSON.parse(localStorage.getItem('cities'))
+      : {};
+
+    cityCounter[inputText] = (cityCounter[inputText] || 0) + 1;
+
+    localStorage.setItem('cities', JSON.stringify(cityCounter));
+
     setInputText('');
   };
 
   return (
     <div className={`${!inputText ? 'navbar' : 'navbar--isActive'} `}>
-      <form className='navbar__form'>
+      <form className='navbar__form' onSubmit={handleSubmit}>
         <input
           className='navbar__input-elem'
           type='text'
@@ -40,7 +49,6 @@ export const Navbar = () => {
             !inputText ? 'navbar__search-btn--isActive' : 'navbar__search-btn'
           } `}
           disabled={!inputText}
-          onClick={addElem}
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
