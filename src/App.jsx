@@ -5,7 +5,9 @@ import { fetchDataFromAPI, setInputValue } from './features/locationSlice';
 
 import '../src/App.scss';
 import { Navbar } from './components/navbar/navbar';
-import { ErrorComponent } from './components/error/errorComponent'
+import { ErrorComponent } from './components/error/errorComponent';
+import { ListItems } from './components/listItems/listItems'
+
 
 function App() {
   const dispatch = useDispatch();
@@ -18,18 +20,20 @@ function App() {
     if (inputValue.length > 0) {
       dispatch(setInputValue(inputValue));
       dispatch(fetchDataFromAPI());
+      dispatch(setInputValue(''))
     }
   }, [dispatch, inputValue]);
 
-  /*  if (isLoading) {
-    return <div>Loading...</div>;
-  } */
+
+
+  if (isLoading) {
+    return <div className='page__loader'>Loading...</div>;
+  }
+
 
   if (hasError) {
     return <ErrorComponent />;
   }
-
-  console.log(locationData);
 
   return (
     <div className='page'>
@@ -39,8 +43,7 @@ function App() {
 
       <main>
         <section>
-          {isLoading}
-          <pre>{JSON.stringify(locationData, null, 2)}</pre>
+         <ListItems locationData={locationData} />
         </section>
       </main>
     </div>
