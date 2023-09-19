@@ -15,8 +15,7 @@ export const fetchDataFromAPI = createAsyncThunk(
         const state = getState();
         const currentInputValue = state.location.inputValue;
 
-
-        const URL = `https://api.openweathermap.org/data/2.5/weather?q=${currentInputValue}&appid=027ee07fafd9a678d925c3a9220c1289`;
+        const URL = `https://api.weatherapi.com/v1/current.json?key=f51e05b2b15d42db90471810231909&q=${currentInputValue}&aqi=no`
 
         const response = await fetch(URL);
 
