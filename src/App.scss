@@ -5,5 +5,17 @@
     &__nav {
         display: flex;
         justify-content: center;
+        padding: 30px;
+    }
+
+    &__loader {
+
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: rgba(146, 143, 143, 0.808);
+
     }
 }
