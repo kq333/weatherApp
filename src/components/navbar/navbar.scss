@@ -30,6 +30,12 @@
         &:focus {
             outline: none;
         }
+        &::placeholder {
+            color: #ef4444;
+            font-style: italic;
+            letter-spacing: 1px;
+
+        }
     }
 
     &__search-btn {
