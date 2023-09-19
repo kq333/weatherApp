@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const initialState = {
     locationData: [],
     inputValue: "",
-    isLoading: true,
+    isLoading: false,
     hasError: false,
 };
 
