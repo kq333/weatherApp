@@ -1,0 +1,14 @@
+.list {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+
+    &__wrapper {
+        padding: 20px;
+        color: #155e75;
+    }
+
+    &__item {
+        padding: 10px;
+    }
+}
