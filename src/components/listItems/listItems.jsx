@@ -1,9 +1,7 @@
 import './listItem.scss';
+import {capitalizeFirstLetter } from '../../utils/helpers'
 
 export const ListItems = ({ cityData, cityCounter }) => {
-  const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-  };
 
   return (
     <div className='list'>
