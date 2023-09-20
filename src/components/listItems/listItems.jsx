@@ -1,26 +1,22 @@
-import { useEffect, useState } from 'react';
-import '../listItems/listItem.scss';
+import './listItem.scss';
 
-export const ListItems = ({ locationData }) => {
-  const [cityCounts, setCityCounts] = useState({});
-
-  useEffect(() => {
-    const storedCounts = JSON.parse(localStorage.getItem('cities')) || {};
-    setCityCounts(storedCounts);
-  }, [locationData]);
+export const ListItems = ({ cityData, cityCounter }) => {
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  };
 
   return (
     <div className='list'>
       <ul className='list__wrapper'>
-        {locationData.map((elem, index) => {
-          const cityName = elem.location.name.toLowerCase();
-          const count = cityCounts[cityName] || 1;
-          const timesLabel = count >= 2 ? 'times(s)' : 'time(s)';
+        {cityData.map((data, index) => {
+          const count = cityCounter[data.city] || 0;
+          const timesLabel = count === 1 ? 'time(s)' : 'times(s)';
+          const cityNameCapitalized = capitalizeFirstLetter(data.city);
 
           return (
             <li className='list__item' key={index}>
-              {elem.location.name} | {elem.location.localtime.slice(0, 10)} |{' '}
-              {elem.current.feelslike_c} (st C) | searched: {count} {timesLabel}
+              {cityNameCapitalized} | {new Date(data.date).toLocaleDateString()}{' '}
+              | {data.temperature} (°C) | searched: {count} {timesLabel}
             </li>
           );
         })}
