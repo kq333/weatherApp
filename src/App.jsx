@@ -6,8 +6,7 @@ import { fetchDataFromAPI, setInputValue } from './features/locationSlice';
 import '../src/App.scss';
 import { Navbar } from './components/navbar/navbar';
 import { ErrorComponent } from './components/error/errorComponent';
-import { ListItems } from './components/listItems/listItems'
-
+import { ListItems } from './components/listItems/listItems';
 
 function App() {
   const dispatch = useDispatch();
@@ -20,16 +19,13 @@ function App() {
     if (inputValue.length > 0) {
       dispatch(setInputValue(inputValue));
       dispatch(fetchDataFromAPI());
-      dispatch(setInputValue(''))
+      dispatch(setInputValue(''));
     }
   }, [dispatch, inputValue]);
-
-
 
   if (isLoading) {
     return <div className='page__loader'>Loading...</div>;
   }
-
 
   if (hasError) {
     return <ErrorComponent />;
@@ -43,7 +39,7 @@ function App() {
 
       <main>
         <section>
-         <ListItems locationData={locationData} />
+          <ListItems locationData={locationData} />
         </section>
       </main>
     </div>
