@@ -19,16 +19,7 @@ export const Navbar = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(setInputValue(inputText.toLocaleLowerCase()));
-
-    const cityCounter = localStorage.getItem('cities')
-      ? JSON.parse(localStorage.getItem('cities'))
-      : {};
-
-    cityCounter[inputText] = (cityCounter[inputText] || 0) + 1;
-
-    localStorage.setItem('cities', JSON.stringify(cityCounter));
-
+    dispatch(setInputValue(inputText));
     setInputText('');
   };
 
