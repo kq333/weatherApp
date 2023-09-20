@@ -7,7 +7,6 @@ const initialState = {
     hasError: false,
 };
 
-
 export const fetchDataFromAPI = createAsyncThunk(
     "fetchData",
     async (inputValue, { getState }) => {
