@@ -1,20 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchDataFromAPI, setInputValue } from './features/locationSlice';
-import '../src/App.scss';
+import {
+  fetchDataFromAPI,
+  setInputValue,
+  setSearchError,
+} from '../src/features/locationSlice';
+import './App.scss';
 import { Navbar } from './components/navbar/navbar';
 import { ErrorComponent } from './components/error/errorComponent';
 import { ListItems } from './components/listItems/listItems';
+import { LoaderComponent } from './components/loader/loader';
+import { Info } from './components/info';
 
 function App() {
   const dispatch = useDispatch();
-  const locationData = useSelector((state) => state.location.locationData);
   const isLoading = useSelector((state) => state.location.isLoading);
   const hasError = useSelector((state) => state.location.hasError);
   const inputValue = useSelector((state) => state.location.inputValue);
-
-  const [cityData, setCityData] = useState([]);
-  const [cityCounter, setCityCounter] = useState({});
+  const cityData = useSelector((state) => state.location.cityData);
+  const cityCounter = useSelector((state) => state.location.cityCounter);
+  const searchError = useSelector((state) => state.location.searchError);
 
   useEffect(() => {
     const savedDataFromStorage =
@@ -22,9 +27,12 @@ function App() {
     const savedCounterFromStorage =
       JSON.parse(localStorage.getItem('cityCounter')) || {};
 
-    setCityData(savedDataFromStorage);
-    setCityCounter(savedCounterFromStorage);
-  }, []);
+    dispatch({ type: 'location/setCityData', payload: savedDataFromStorage });
+    dispatch({
+      type: 'location/setCityCounter',
+      payload: savedCounterFromStorage,
+    });
+  }, [dispatch]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,27 +42,8 @@ function App() {
         try {
           const response = await dispatch(fetchDataFromAPI());
 
-          if (!fetchDataFromAPI.rejected.match(response)) {
-            const newCityData = {
-              city: inputValue.toLowerCase(),
-              date: new Date().toISOString(),
-              temperature: locationData[0]?.current?.feelslike_c,
-            };
-
-            const updatedCityData = [...cityData, newCityData];
-            setCityData(updatedCityData);
-
-            const updatedCityCounter = {
-              ...cityCounter,
-              [newCityData.city]: (cityCounter[newCityData.city] || 0) + 1,
-            };
-            setCityCounter(updatedCityCounter);
-
-            localStorage.setItem('cityData', JSON.stringify(updatedCityData));
-            localStorage.setItem(
-              'cityCounter',
-              JSON.stringify(updatedCityCounter),
-            );
+          if (response.error) {
+            console.error('City not found or other API error:', response.error);
           }
         } catch (error) {
           console.error('Error fetching data from the API:', error);
@@ -65,15 +54,27 @@ function App() {
     };
 
     fetchData();
-  }, [dispatch, inputValue, locationData, cityData, cityCounter]);
+  }, [dispatch, inputValue]);
+
+  useEffect(() => {
+    localStorage.setItem('cityData', JSON.stringify(cityData));
+    localStorage.setItem('cityCounter', JSON.stringify(cityCounter));
+  }, [cityData, cityCounter]);
 
   if (isLoading) {
-    return <div className='page__loader'>Loading...</div>;
+    return <LoaderComponent />;
   }
 
   if (hasError) {
-    console.log(hasError);
     return <ErrorComponent />;
+  }
+
+  if (searchError) {
+    dispatch(setSearchError(true));
+    setTimeout(() => {
+      dispatch(setSearchError(false));
+    }, 2000);
+    return <Info />;
   }
 
   return (
